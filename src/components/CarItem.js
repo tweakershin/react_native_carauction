@@ -11,14 +11,18 @@ export default class CarItem extends Component{
       year: 2000,
       image: ''
     },
-    style: {}
+    style: {},
+    onPress: ()=>(console.log("onpress"))
   }
 
   render(){
     return(
-      <TouchableOpacity style={
-        [styles.container, this.props.style]
-        }>
+      <TouchableOpacity 
+        style={
+          [styles.container, this.props.style]
+        }
+        onPress={this.props.onPress}
+        >
         <View style={{flex:1}}>
           <Image 
             source={{uri: this.props.item.image}}
