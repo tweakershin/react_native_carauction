@@ -5,6 +5,9 @@ import {
   FlatList} 
 from 'react-native';
 
+import {TouchableOpacity} from 'react-native';
+import {Ionicons} from '@expo/vector-icons';
+
 import CarList from '../components/CarList'
 
 
@@ -28,12 +31,33 @@ const mockData = [
 ];
 
 export default class MyCarListScreen extends React.Component{
-constructor(props){
-  super(props);
-  this.state = {
-    myCarList: mockData
+  constructor(props){
+    super(props);
+    this.state = {
+      myCarList: mockData
+    };
+  }
+
+  static navigationOptions = ({ navigation }) => {
+    const params = navigation.state.params || {};
+
+    return {
+      headerRight: (
+        <TouchableOpacity
+          style={{ padding: 5, paddingRight: 15 }}
+          onPress={() => {
+            console.log("오른쪽 + 버튼 토글");
+            // navigation.navigate('');
+          }}
+        >
+          <Ionicons name={'ios-add'} size={35} color={'white'} />
+        </TouchableOpacity>
+      ),
+      title: 'My Cars',
+
+    };
   };
-}
+
 
   render(){
     return(
