@@ -20,7 +20,9 @@ export default class CarList extends Component{
       <CarItem 
         item={item} 
         onPress={
-          ()=>this.props.navigation.push('MyCarDetail')
+          ()=>this.props.navigation.push('MyCarDetail',{
+            item:item
+          })
           }
       />
     )
