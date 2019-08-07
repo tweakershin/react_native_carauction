@@ -69,9 +69,6 @@ export default class MyCarListScreen extends React.Component{
     this.setState({carList:newCarList})
   }
 
-
-
-
   getCarList = async () => {
       let a;
       await AsyncStorage.setItem("@MyStore:myCarList", JSON.stringify(mockData))
