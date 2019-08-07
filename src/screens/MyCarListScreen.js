@@ -2,10 +2,12 @@ import React from 'react';
 import { 
   View, 
   Text, 
-  FlatList} 
+  FlatList,
+  AsyncStorage // 이쪽입니다.
+} 
 from 'react-native';
 
-import {AsyncStorage} from 'react-native';
+import { NavigationEvents } from 'react-navigation';
 
 import {TouchableOpacity} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
@@ -35,11 +37,40 @@ const mockData = [
 export default class MyCarListScreen extends React.Component{
   constructor(props){
     super(props);
+
     this.state = {
       myCarList: mockData
     };
-    this.getCarList()
+    this.initMyCar()
   }
+  initMyCar = async ()=>{
+    let carList = await AsyncStorage.getItem("myCar");
+    if (carList === null){
+      await AsyncStorage.setItem(
+        "myCar", JSON.stringify(mockData)
+      )
+      carList = mockData;
+    }
+    else{
+      carList = JSON.parse(carList);
+    }
+    this.setState({myCarList: carList})
+  }
+
+  addMyCar(vin, manufacturer, model, year, image){
+    const car = {
+      vin: vin,
+      manufacturer:manufacturer,
+      model:model,
+      year: year,
+      image: image
+    }
+    const newCarList = this.state.myCarList.concat(car);
+    this.setState({carList:newCarList})
+  }
+
+
+
 
   getCarList = async () => {
       let a;
@@ -78,7 +109,12 @@ export default class MyCarListScreen extends React.Component{
 
   render(){
     return(
+
       <View>
+        <NavigationEvents
+        onWillFocus={payload => this.initMyCar()}
+        // onDidFocus={payload => this.initMyCar()}
+      />
         <Text>MyCarList</Text>
         <CarList
           carList={this.state.myCarList}

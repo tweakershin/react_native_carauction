@@ -8,7 +8,8 @@ export default class MyButton extends React.Component{
     size: 20,
     style: {},
     iconName: '',
-    text: ''
+    text: '',
+    onPress: ()=>(console.log("버튼 클릭"))
   }
 
   render(){
@@ -21,7 +22,9 @@ export default class MyButton extends React.Component{
               justifyContent:'center',
               padding: 20},
               this.props.style]
-              }>
+              }
+            onPress={this.props.onPress}
+            >
             <View style={{flexDirection:'row'}}>
 
               <Ionicons 
@@ -36,7 +39,7 @@ export default class MyButton extends React.Component{
                   marginLeft:20}}>
                 {this.props.text}
               </Text>
-              
+
             </View>
           </TouchableOpacity>
     )
