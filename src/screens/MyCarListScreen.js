@@ -5,6 +5,8 @@ import {
   FlatList} 
 from 'react-native';
 
+import {AsyncStorage} from 'react-native';
+
 import {TouchableOpacity} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 
@@ -36,6 +38,21 @@ export default class MyCarListScreen extends React.Component{
     this.state = {
       myCarList: mockData
     };
+    this.getCarList()
+  }
+
+  getCarList = async () => {
+      let a;
+      await AsyncStorage.setItem("@MyStore:myCarList", JSON.stringify(mockData))
+      try{
+        a = await AsyncStorage.getItem('@MyStore:myCarList');
+        if (a!==null){
+          console.log(a)
+        }
+        console.log(a)
+      } catch{
+        console.log("error")
+      }
   }
 
   static navigationOptions = ({ navigation }) => {
