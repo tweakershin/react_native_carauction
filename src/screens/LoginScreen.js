@@ -5,10 +5,20 @@ import MyButton from '../components/MyButton'
 export default class LoginScreen extends React.Component{
   constructor(props){
     super(props);
+    const loginId = this.props.navigation.getParam('loginId')
     this.state ={
       userid:'',
       pwd: '',
+      loginId: loginId
     }
+    
+    if (loginId !== undefined){
+      return this.props.navigtaion.navigate('MyCarList',{
+        logindId:loginId
+        }
+      )
+    }
+
   }
 
   submitSignup = async ()=>{
@@ -16,9 +26,19 @@ export default class LoginScreen extends React.Component{
     const pwd = this.state.pwd;
 
     let user = await AsyncStorage.getItem(`user:${userid}`);
-    
+    if (user !==null){
+      alert("이미 가입된 아이디입니다.")
+      return false
+    }
 
+    AsyncStorage.setItem(`user:${userid}`, pwd);
+
+    this.props.navigtaion.navigate('MyCarList',{
+      loginId:userid
+    }
+    )
   }
+  
 
   render(){
     return(
@@ -41,6 +61,8 @@ export default class LoginScreen extends React.Component{
         <MyButton 
           text="회원가입"
           iconName="ios-calendar"
+          onPress={this.submitSignup}
+
         />
       </View>
     )
