@@ -1,8 +1,10 @@
 import React from 'react';
 import {View, Text, Image, FlatList} from 'react-native';
 
-import IconText from '../components/IconText'
+import IconText from '../components/IconText';
 import { Ionicons } from '@expo/vector-icons';
+
+import AuctionList from '../components/AuctionList';
 export default class MyCarDetailScreen extends React.Component{
   constructor(props){
     super(props);
@@ -32,7 +34,7 @@ export default class MyCarDetailScreen extends React.Component{
           />
         </View>
 
-        <View style={{flex:1, flexDirection:'row', margin:20}}>
+        <View style={{flexDirection:'row', margin:20}}>
           <View style={{flex:1}}>
             
             
@@ -63,8 +65,10 @@ export default class MyCarDetailScreen extends React.Component{
             
           </View>
         </View>
-
-
+        
+        <View>
+          <AuctionList />
+        </View>
 
       </View>
 

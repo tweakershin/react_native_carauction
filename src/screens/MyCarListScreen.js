@@ -46,6 +46,7 @@ export default class MyCarListScreen extends React.Component{
         <TouchableOpacity
           style={{ padding: 5, paddingRight: 15 }}
           onPress={() => {
+            navigation.push('MyCarAdd');
             console.log("오른쪽 + 버튼 토글");
             // navigation.navigate('');
           }}
