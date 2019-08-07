@@ -10,6 +10,7 @@ import {
 from 'react-navigation';
 
 import MyCarListScreen from './src/screens/MyCarListScreen';
+import MyCarDetailScreen from './src/screens/MyCarDetailScreen';
 
 const auction = function tempAuction(){
   return(
@@ -33,6 +34,9 @@ const defaultNavigationOptions = {
 const MyCarStack = createStackNavigator({
   'MyCarList':{
     screen: MyCarListScreen
+  },
+  'MyCarDetail':{
+    screen: MyCarDetailScreen
   }
 },
 {

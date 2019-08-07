@@ -11,14 +11,17 @@ export default class CarItem extends Component{
       year: 2000,
       image: ''
     },
-    style: {}
+    style: {},
+    onPress: ()=>(console.log('onPress'))
   }
 
   render(){
     return(
       <TouchableOpacity style={
         [styles.container, this.props.style]
-        }>
+        }
+        onPress={this.props.onPress}
+        >
         <View style={{flex:1}}>
           <Image 
             source={{uri: this.props.item.image}}
@@ -56,6 +59,6 @@ const styles = StyleSheet.create({
     flex:1,
     flexDirection: 'row',
     width: '100%',
-    borderWidth:1
+    // borderWidth:1
   }
 })

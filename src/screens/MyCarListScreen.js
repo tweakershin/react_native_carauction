@@ -54,7 +54,6 @@ export default class MyCarListScreen extends React.Component{
         </TouchableOpacity>
       ),
       title: 'My Cars',
-
     };
   };
 
@@ -65,6 +64,8 @@ export default class MyCarListScreen extends React.Component{
         <Text>MyCarList</Text>
         <CarList
           carList={this.state.myCarList}
+          // navigtaion={this.props.navigation}
+          {...this.props}
         />
       </View>
     )

@@ -10,13 +10,19 @@ export default class CarList extends Component{
       refreshing:false
     };
   }
+  
   static defaultProps = {
     carList: Object()
   }
 
   renderCarItem({item, index, separators}){
     return (
-      <CarItem item={item}></CarItem>
+      <CarItem 
+        item={item} 
+        onPress={
+          ()=>this.props.navigation.push('MyCarDetail')
+          }
+      />
     )
   }
 
@@ -25,24 +31,32 @@ export default class CarList extends Component{
       <View>
         <FlatList 
           data={this.props.carList}
-          renderItem={this.renderCarItem}
+          renderItem={this.renderCarItem.bind(this)}
           keyExtractor={(item, index) => item.vin}
+          refreshing={this.state.refreshing}
+
           onRefresh={()=> {
             this.setState({refreshing:true})
             console.log("새로고침중입니다.");
             console.log("서버에 요청을 보냅니다.")
+            // setTimeout(
+            //   ()=>{
+            //     console.log("요청 성공")
+            //   },
+            // )
             this.setState({refreshing:false})
             }
           }
-          refreshing={this.state.refreshing}
+
           ItemSeparatorComponent={({ highlighted, leadingItem }) => {
-            console.log(leadingItem) // 앞 component
+            // console.log(leadingItem) // 앞 component
             return(
               <View
                 style={{
                   height: 1,
                   marginLeft: 20,
-                  width: '100%',
+                  marginRight: 20,
+                  width: '90%',
                   backgroundColor: 'gray',
                 }}
               >
