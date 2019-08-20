@@ -14,6 +14,7 @@ import MyCarAddScreen from "./src/screens/MyCarAddScreen";
 import LoginScreen from "./src/screens/LoginScreen";
 
 import AuctionListScreen from "./src/screens/AuctionListScreen";
+import AuctionDetailScreen from "./src/screens/AuctionDetailScreen";
 
 const auction = function tempAuction() {
   return <View />;
@@ -50,6 +51,9 @@ const AuctionStack = createStackNavigator(
   {
     AuctionList: {
       screen: AuctionListScreen
+    },
+    CarAuctionDetail: {
+      screen: AuctionDetailScreen
     }
   },
   {
