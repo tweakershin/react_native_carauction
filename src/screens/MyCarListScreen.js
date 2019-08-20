@@ -1,87 +1,82 @@
-import React from 'react';
-import { 
-  View, 
-  Text, 
+import React from "react";
+import {
+  View,
+  Text,
   FlatList,
   AsyncStorage // 이쪽입니다.
-} 
-from 'react-native';
+} from "react-native";
 
-import { NavigationEvents } from 'react-navigation';
+import { NavigationEvents } from "react-navigation";
 
-import {TouchableOpacity} from 'react-native';
-import {Ionicons} from '@expo/vector-icons';
+import { TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
-import CarList from '../components/CarList'
-
+import CarList from "../components/CarList";
 
 const mockData = [
   {
-    vin: '12345678',
-    manufacturer: 'Benz',
-    model: 'E-Class',
+    vin: "12345678",
+    manufacturer: "Benz",
+    model: "E-Class",
     year: 2018,
     image:
-      'https://www.tesla.com/sites/default/files/images/model-3/model_3--side_profile.png?20170801',
+      "https://www.tesla.com/sites/default/files/images/model-3/model_3--side_profile.png?20170801"
   },
   {
-    vin: '45678765',
-    manufacturer: 'Tesla',
-    model: 'Model 3',
+    vin: "45678765",
+    manufacturer: "Tesla",
+    model: "Model 3",
     year: 2017,
     image:
-      'https://www.tesla.com/tesla_theme/assets/img/compare/model_s--side_profile.png?20170524',
-  },
+      "https://www.tesla.com/tesla_theme/assets/img/compare/model_s--side_profile.png?20170524"
+  }
 ];
 
-export default class MyCarListScreen extends React.Component{
-  constructor(props){
+export default class MyCarListScreen extends React.Component {
+  constructor(props) {
     super(props);
 
     this.state = {
       myCarList: mockData
     };
-    this.initMyCar()
+    this.initMyCar();
   }
-  initMyCar = async ()=>{
+  initMyCar = async () => {
     let carList = await AsyncStorage.getItem("myCar");
-    if (carList === null){
-      await AsyncStorage.setItem(
-        "myCar", JSON.stringify(mockData)
-      )
+    if (carList === null) {
+      await AsyncStorage.setItem("myCar", JSON.stringify(mockData));
       carList = mockData;
-    }
-    else{
+    } else {
       carList = JSON.parse(carList);
     }
-    this.setState({myCarList: carList})
-  }
+    this.setState({ myCarList: carList });
+  };
 
-  addMyCar(vin, manufacturer, model, year, image){
+  addMyCar(vin, manufacturer, model, year, image) {
     const car = {
       vin: vin,
-      manufacturer:manufacturer,
-      model:model,
+      manufacturer: manufacturer,
+      model: model,
       year: year,
       image: image
-    }
+    };
     const newCarList = this.state.myCarList.concat(car);
-    this.setState({carList:newCarList})
+    this.setState({ carList: newCarList });
   }
 
   getCarList = async () => {
-      let a;
-      await AsyncStorage.setItem("@MyStore:myCarList", JSON.stringify(mockData))
-      try{
-        a = await AsyncStorage.getItem('@MyStore:myCarList');
-        if (a!==null){
-          console.log(a)
-        }
-        console.log(a)
-      } catch{
-        console.log("error")
+    let a;
+    await AsyncStorage.setItem("@MyStore:myCarList", JSON.stringify(mockData));
+    try {
+      a = await AsyncStorage.getItem("@MyStore:myCarList");
+      if (a !== null) {
+        console.log(a);
       }
-  }
+      console.log(a);
+    } catch {
+      console.log("error");
+    }
+  };
 
   static navigationOptions = ({ navigation }) => {
     const params = navigation.state.params || {};
@@ -91,27 +86,25 @@ export default class MyCarListScreen extends React.Component{
         <TouchableOpacity
           style={{ padding: 5, paddingRight: 15 }}
           onPress={() => {
-            navigation.push('MyCarAdd');
+            navigation.push("MyCarAdd");
             console.log("오른쪽 + 버튼 토글");
             // navigation.navigate('');
           }}
         >
-          <Ionicons name={'ios-add'} size={35} color={'white'} />
+          <Ionicons name={"ios-add"} size={35} color={"white"} />
         </TouchableOpacity>
       ),
-      title: 'My Cars',
+      title: "My Cars"
     };
   };
 
-
-  render(){
-    return(
-
+  render() {
+    return (
       <View>
         <NavigationEvents
-        onWillFocus={payload => this.initMyCar()}
-        // onDidFocus={payload => this.initMyCar()}
-      />
+          onWillFocus={payload => this.initMyCar()}
+          // onDidFocus={payload => this.initMyCar()}
+        />
         <Text>MyCarList</Text>
         <CarList
           carList={this.state.myCarList}
@@ -119,6 +112,6 @@ export default class MyCarListScreen extends React.Component{
           {...this.props}
         />
       </View>
-    )
+    );
   }
 }
