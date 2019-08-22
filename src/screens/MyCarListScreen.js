@@ -37,31 +37,68 @@ export default class MyCarListScreen extends React.Component {
     super(props);
 
     this.state = {
-      myCarList: mockData
+      myCarList: []
     };
+  }
+
+  componentDidMount() {
     this.initMyCar();
   }
+
+  // initMyCar = async () => {
+  //   let carList = await AsyncStorage.getItem("myCar");
+  //   if (carList === null) {
+  //     await AsyncStorage.setItem("myCar", JSON.stringify(mockData));
+  //     carList = mockData;
+  //   } else {
+  //     carList = JSON.parse(carList);
+  //   }
+  //   this.setState({ myCarList: carList });
+  // };
+
   initMyCar = async () => {
-    let carList = await AsyncStorage.getItem("myCar");
-    if (carList === null) {
-      await AsyncStorage.setItem("myCar", JSON.stringify(mockData));
-      carList = mockData;
-    } else {
-      carList = JSON.parse(carList);
-    }
-    this.setState({ myCarList: carList });
+    return await fetch(
+      "http://ec2-13-124-49-137.ap-northeast-2.compute.amazonaws.com:3000/api/Car",
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json"
+        }
+      }
+    )
+      .then(resp => resp.json())
+      .then(respJson => {
+        console.log(respJson);
+        this.setState({ myCarList: respJson });
+      })
+      .catch(err => console.error(err));
   };
 
   addMyCar(vin, manufacturer, model, year, image) {
-    const car = {
-      vin: vin,
-      manufacturer: manufacturer,
-      model: model,
-      year: year,
-      image: image
-    };
-    const newCarList = this.state.myCarList.concat(car);
-    this.setState({ carList: newCarList });
+    fetch(
+      "http://ec2-13-124-49-137.ap-northeast-2.compute.amazonaws.com:3000/api/Car",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify({
+          $class: "com.betweak.carauction.Car",
+          vin: vin,
+          imageUri: image,
+          owner: "ys@betweak.com"
+        })
+      }
+    )
+      .then(resp => resp.json())
+      .then(respJson => {
+        const newCarList = this.state.myCarList.concat(respJson);
+        this.setState({ carList: newCarList });
+      })
+      .catch(err => {
+        console.error(err);
+      });
   }
 
   getCarList = async () => {

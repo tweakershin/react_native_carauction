@@ -23,6 +23,8 @@ export default class CarItem extends Component {
         onPress={this.props.onPress}
       >
         <View style={{ flex: 3 }}>
+          <Text style={{ fontSize: 30 }}>{this.props.item.vin}</Text>
+
           <Image
             source={{ uri: this.props.item.image }}
             style={{ width: "100%", height: "100%" }}
@@ -30,6 +32,7 @@ export default class CarItem extends Component {
         </View>
 
         <View style={{ flex: 5 }}>
+          <Text>{this.props.item.owner}</Text>
           <Text
             style={{
               fontSize: 24,
