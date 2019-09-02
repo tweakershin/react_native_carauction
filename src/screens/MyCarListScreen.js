@@ -41,24 +41,41 @@ export default class MyCarListScreen extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.initMyCar();
-  }
+  fetchMyCar = async () => {
+    const carList = await fetch(
+      "http://ec2-13-124-49-137.ap-northeast-2.compute.amazonaws.com:3000/api/org.example.carauction.Car"
+    ).then(resp => {
+      if (resp.status != 200) {
+        return false;
+      }
+      return resp.json();
+    });
+    console.log(carList);
+    this.setState({ myCarList: carList });
+  };
 
-  // initMyCar = async () => {
-  //   let carList = await AsyncStorage.getItem("myCar");
-  //   if (carList === null) {
-  //     await AsyncStorage.setItem("myCar", JSON.stringify(mockData));
-  //     carList = mockData;
-  //   } else {
-  //     carList = JSON.parse(carList);
-  //   }
-  //   this.setState({ myCarList: carList });
-  // };
+  addMycar = async (vin, imageUri) => {
+    const uri =
+      "http://ec2-13-124-49-137.ap-northeast-2.compute.amazonaws.com:3000/api/org.example.carauction.Car";
+    const result = fetch(uri, {
+      method: "POST",
+      body: JSON.stringify({
+        $class: "org.example.carauction.Car",
+        vin: vin,
+        imageUri: imageUri
+      })
+    });
+    console.log(result);
+  };
+
+  componentDidMount() {
+    // this.initMyCar();
+    this.fetchMyCar();
+  }
 
   initMyCar = async () => {
     return await fetch(
-      "http://ec2-13-124-49-137.ap-northeast-2.compute.amazonaws.com:3000/api/Car",
+      "http://ec2-13-124-49-137.ap-northeast-2.compute.amazonaws.com:3000/api/org.example.carauction.Car",
       {
         method: "GET",
         headers: {
@@ -68,7 +85,7 @@ export default class MyCarListScreen extends React.Component {
     )
       .then(resp => resp.json())
       .then(respJson => {
-        console.log(respJson);
+        // console.log(respJson);
         this.setState({ myCarList: respJson });
       })
       .catch(err => console.error(err));
@@ -76,7 +93,7 @@ export default class MyCarListScreen extends React.Component {
 
   addMyCar(vin, manufacturer, model, year, image) {
     fetch(
-      "http://ec2-13-124-49-137.ap-northeast-2.compute.amazonaws.com:3000/api/Car",
+      "http://ec2-13-124-49-137.ap-northeast-2.compute.amazonaws.com:3000/api/org.example.carauction.Car",
       {
         method: "POST",
         headers: {
@@ -84,7 +101,7 @@ export default class MyCarListScreen extends React.Component {
           Accept: "application/json"
         },
         body: JSON.stringify({
-          $class: "com.betweak.carauction.Car",
+          $class: "org.example.carauction.Car",
           vin: vin,
           imageUri: image,
           owner: "ys@betweak.com"
