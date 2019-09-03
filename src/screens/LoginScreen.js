@@ -10,7 +10,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import IconTextInput from "../components/IconTextInput";
 
-import { fetchUser } from "../apis/user";
+import { fetchUser, postUser } from "../apis/user";
 
 class LoginScreen extends React.Component {
   constructor(props) {
@@ -29,9 +29,17 @@ class LoginScreen extends React.Component {
   }
 
   async login() {
-    const result = await fetchUser(this.state.textEmail, this.state.textName);
-    console.log(result);
-    if (result.length === 1) {
+    let member = await fetchUser(this.state.textEmail, this.state.textName);
+    console.log(member);
+    if (member.length === 1) {
+      return this.props.navigation.navigate("");
+    }
+    if (member.length === 0) {
+      member = await postUser(
+        this.state.textEmail,
+        this.state.firstName,
+        this.state.firstName
+      );
       return this.props.navigation.navigate("");
     }
   }
