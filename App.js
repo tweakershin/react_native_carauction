@@ -2,18 +2,27 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import LoginScreen from "./src/screens/LoginScreen";
-
+import MyCarListScreen from "./src/screens/MyCarListScreen";
 import {
   createStackNavigator,
   createBottomTabNavigator,
   createAppContainer
 } from "react-navigation";
 
+const CarListStack = createStackNavigator({
+  MyCarList: {
+    screen: MyCarListScreen
+  }
+});
+
+const StackContainer = createAppContainer(CarListStack);
+
 const RootStack = createStackNavigator(
   {
     Login: {
       screen: LoginScreen
-    }
+    },
+    CarListStack: CarListStack
   },
   {
     mode: "modal",

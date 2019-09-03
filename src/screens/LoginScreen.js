@@ -30,20 +30,19 @@ class LoginScreen extends React.Component {
 
   async login() {
     let member = await fetchUser(this.state.textEmail, this.state.textName);
-    console.log(member);
     if (member.length === 1) {
-      return this.props.navigation.navigate("");
+      return this.props.navigation.navigate("MyCarList", { member: member[0] });
     }
     if (member.length === 0) {
       member = await postUser(
         this.state.textEmail,
-        this.state.firstName,
-        this.state.firstName
+        this.state.textName,
+        this.state.textName
       );
       if (!member) {
         alert("이름이 틀렸습니다.");
       } else {
-        return this.props.navigation.navigate("");
+        return this.props.navigation.navigate("MyCarList", { member: member });
       }
     }
   }
