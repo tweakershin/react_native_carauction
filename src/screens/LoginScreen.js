@@ -32,7 +32,7 @@ class LoginScreen extends React.Component {
     const result = await fetchUser(this.state.textEmail, this.state.textName);
     console.log(result);
     if (result.length === 1) {
-      this.props.navigation.navigate("");
+      return this.props.navigation.navigate("");
     }
   }
 
