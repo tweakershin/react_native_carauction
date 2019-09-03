@@ -40,7 +40,11 @@ class LoginScreen extends React.Component {
         this.state.firstName,
         this.state.firstName
       );
-      return this.props.navigation.navigate("");
+      if (!member) {
+        alert("이름이 틀렸습니다.");
+      } else {
+        return this.props.navigation.navigate("");
+      }
     }
   }
 
