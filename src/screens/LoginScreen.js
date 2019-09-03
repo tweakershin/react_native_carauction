@@ -4,12 +4,38 @@ import {
   Text,
   View,
   KeyboardAvoidingView,
+  TextInput,
   Button
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import IconTextInput from "../components/IconTextInput";
 
+import { fetchUser } from "../apis/user";
+
 class LoginScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      textName: "",
+      textEmail: ""
+    };
+  }
+
+  setTextName(name) {
+    this.setState({ textName: name });
+  }
+  setTextEmail(email) {
+    this.setState({ textEmail: email });
+  }
+
+  async login() {
+    const result = await fetchUser(this.state.textEmail, this.state.textName);
+    console.log(result);
+    if (result.length === 1) {
+      this.props.navigation.navigate("");
+    }
+  }
+
   render() {
     return (
       <KeyboardAvoidingView
@@ -22,7 +48,6 @@ class LoginScreen extends React.Component {
         behavior="padding"
       >
         <View style={styles.container}>
-          {/* <Ionicons name={'md-car'} size={100} color={'tomato'} /> */}
           <Text
             style={{
               fontSize: 30,
@@ -33,22 +58,23 @@ class LoginScreen extends React.Component {
           >
             CAR AUCTION
           </Text>
+
           <IconTextInput
             style={{ marginTop: 10 }}
             iconName={"ios-person"}
             placeholder={"이름"}
+            onChange={this.setTextName.bind(this)}
           />
           <IconTextInput
             style={{ marginTop: 10 }}
             iconName={"ios-mail"}
             placeholder={"이메일"}
+            onChange={this.setTextEmail.bind(this)}
           />
           <Button
             style={{ marginTop: 10 }}
             title={"회원가입 / 로그인"}
-            onPress={() => {
-              this.props.navigation.goBack(null);
-            }}
+            onPress={this.login.bind(this)}
           />
         </View>
       </KeyboardAvoidingView>

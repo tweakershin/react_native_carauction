@@ -1,30 +1,38 @@
 async function fetchUser(email, name = "", isAuctioneer = false) {
+  let url = "";
   if (isAuctioneer) {
     url = "http://52.78.89.146:3000/api/Auctioneer";
   } else {
     url = "http://52.78.89.146:3000/api/Member";
   }
-  filter = JSON.stringify({
+  const filter = JSON.stringify({
     where: {
-      and: {
-        email: email,
-        lastName: name
-      }
+      and: [
+        {
+          email: email
+        },
+        {
+          lastName: name
+        }
+      ]
     }
   });
   // filter = '{"where": {"email": "ys@betweak.com", "lastName": "shin"}}';
   // url = url + params;
   url = `${url}?filter=${filter}`;
-  fetch(url, {
+
+  result = await fetch(url, {
     method: "GET"
   }).then(resp => {
     if (!(200 <= resp.status < 300)) {
-      console.error("Request실패");
+      console.error("Request 오류");
       return resp.status;
     } else {
       return resp.json();
     }
   });
+
+  return result;
 }
 
 async function postUser(email, firstName, lastName) {
@@ -40,7 +48,7 @@ async function postUser(email, firstName, lastName) {
     balance: defaultBalance
   });
 
-  fetch(url, {
+  result = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -55,4 +63,7 @@ async function postUser(email, firstName, lastName) {
       return resp.json();
     }
   });
+  return result;
 }
+
+export { fetchUser, postUser };
