@@ -16,8 +16,8 @@ class LoginScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      textName: "",
-      textEmail: ""
+      textName: "shin",
+      textEmail: "ys@betweak.com"
     };
   }
 
@@ -30,7 +30,10 @@ class LoginScreen extends React.Component {
 
   async login() {
     let member = await fetchUser(this.state.textEmail, this.state.textName);
+    console.log(member);
+
     if (member.length === 1) {
+      console.log(member);
       return this.props.navigation.navigate("MyCarList", { member: member[0] });
     }
     if (member.length === 0) {
@@ -75,12 +78,14 @@ class LoginScreen extends React.Component {
             iconName={"ios-person"}
             placeholder={"이름"}
             onChange={this.setTextName.bind(this)}
+            defaultValue={this.state.textName}
           />
           <IconTextInput
             style={{ marginTop: 10 }}
             iconName={"ios-mail"}
             placeholder={"이메일"}
             onChange={this.setTextEmail.bind(this)}
+            defaultValue={this.state.textEmail}
           />
           <Button
             style={{ marginTop: 10 }}

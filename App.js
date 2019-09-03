@@ -22,7 +22,7 @@ const RootStack = createStackNavigator(
     Login: {
       screen: LoginScreen
     },
-    CarListStack: CarListStack
+    CarStack: CarListStack
   },
   {
     mode: "modal",
