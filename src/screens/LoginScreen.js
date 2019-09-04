@@ -11,7 +11,7 @@ import {
 import { AsyncStorage } from "react-native";
 import MyButton from "../components/MyButton";
 
-import { fetchUser } from "../apis/user";
+import { fetchUser, postUser } from "../apis/user";
 
 import * as Permissions from "expo-permissions";
 
@@ -90,7 +90,7 @@ export default class LoginScreen extends React.Component {
       this.state.name
     );
 
-    AsyncStorage.setItem(`loginMember`, JSON.stringify(user));
+    await AsyncStorage.setItem(`loginMember`, JSON.stringify(user));
 
     this.props.navigation.navigate("MyCarList", {
       user: user

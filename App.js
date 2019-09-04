@@ -15,6 +15,7 @@ import LoginScreen from "./src/screens/LoginScreen";
 
 import AuctionListScreen from "./src/screens/AuctionListScreen";
 import AuctionDetailScreen from "./src/screens/AuctionDetailScreen";
+import SettingScreen from "./src/screens/SettingScreen";
 
 const auction = function tempAuction() {
   return <View />;
@@ -70,7 +71,7 @@ const tabNavigator = createBottomTabNavigator(
       screen: AuctionStack
     },
     Settings: {
-      screen: settings
+      screen: SettingScreen
     }
   },
   {
