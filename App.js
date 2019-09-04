@@ -106,11 +106,11 @@ const tabNavigator = createBottomTabNavigator(
 
 const RootStack = createStackNavigator(
   {
-    Login: {
-      screen: LoginScreen
-    },
     Main: {
       screen: tabNavigator
+    },
+    Login: {
+      screen: LoginScreen
     }
   },
   {

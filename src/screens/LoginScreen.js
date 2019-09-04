@@ -30,14 +30,13 @@ export default class LoginScreen extends React.Component {
   constructor(props) {
     super(props);
 
-    const loginId = this.props.navigation.getParam("loginId");
+    const loginMember = this.props.navigation.getParam("loginMember");
 
     this.state = {
       email: "",
       name: "",
       user: {},
 
-      loginId: loginId,
       photos: [
         {
           image: {
@@ -47,9 +46,9 @@ export default class LoginScreen extends React.Component {
         }
       ]
     };
-    if (loginId !== undefined) {
+    if (loginMember !== undefined) {
       return this.props.navigtaion.navigate("MyCarList", {
-        logindId: loginId
+        member: loginMember
       });
     }
   }
@@ -59,8 +58,9 @@ export default class LoginScreen extends React.Component {
   }
 
   checkLogined = async () => {
-    let user = AsyncStorage.getItem(`loginMember`);
+    let user = await AsyncStorage.getItem(`loginMember`);
     this.setState({ user: user });
+    console.log(user);
     if (user) {
       this.props.navigation.navigate("MyCarList", {
         user: user

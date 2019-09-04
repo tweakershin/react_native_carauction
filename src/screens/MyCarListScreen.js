@@ -52,6 +52,10 @@ export default class MyCarListScreen extends React.Component {
 
   setMember = async () => {
     member = await AsyncStorage.getItem("loginMember");
+    console.log(member);
+    if (!member) {
+      return this.props.navigation.navigate("Login");
+    }
     member = JSON.parse(member);
     this.setState({ member: member });
   };
