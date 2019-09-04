@@ -34,12 +34,10 @@ export default class AuctionList extends React.Component {
         <CarItem item={carItem} />
       </View>
     );
-
-    // return <CarItem item={item} />;
   };
 
   render() {
-    if (this.props.auctionList) {
+    if (this.props.auctionList.length !== 0) {
       return (
         <View>
           <FlatList

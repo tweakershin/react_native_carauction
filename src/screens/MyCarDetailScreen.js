@@ -6,7 +6,8 @@ import { Ionicons } from "@expo/vector-icons";
 
 import AuctionList from "../components/AuctionList";
 
-import { fetchCarDetail } from "../apis/cars";
+import { fetchCarDetail, auctionListByCar } from "../apis/cars";
+import { fetchAuctionList } from "../apis/auction";
 export default class MyCarDetailScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -20,7 +21,10 @@ export default class MyCarDetailScreen extends React.Component {
   fetchCar = async () => {
     car = await fetchCarDetail(this.state.myCar.vin);
     this.setState({ myCar: car });
-    console.log(car);
+
+    auctionList = await auctionListByCar(car);
+    console.log(auctionList);
+    this.setState({ auctionList: auctionList });
   };
 
   static navigationOptions = ({ navigation }) => {
@@ -71,53 +75,9 @@ export default class MyCarDetailScreen extends React.Component {
         </View>
 
         <View>
-          <AuctionList />
+          <AuctionList auctionList={this.state.auctionList} />
         </View>
       </View>
-
-      // <View>
-      //   <View style={{ flexDirection: 'column' }}>
-      //       <Image
-      //         source={{ uri: this.state.myCar.image }}
-      //         style={{
-      //           width: '100%',
-      //           height: 150,
-      //           resizeMode: 'cover',
-      //         }}
-      //       />
-      //     <View style={{ flexGrow: 1, paddingLeft: 10 }}>
-      //       <View
-      //         style={{
-      //           position: 'absolute',
-      //           height: '70%',
-      //           width: 1,
-      //           left: '50%',
-      //           top: '15%',
-      //           backgroundColor: '#aaa',
-      //         }}
-      //       />
-
-      //       <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-      //         <IconText iconName={'ios-barcode'}>
-      //           {this.state.myCar.vin}
-      //         </IconText>
-      //         <IconText iconName={'ios-construct'}>
-      //           {this.state.myCar.manufacturer}
-      //         </IconText>
-      //         <IconText iconName={'ios-car'}>
-      //           {this.state.myCar.model}
-      //         </IconText>
-      //         <IconText iconName={'ios-calendar'}>
-      //           {this.state.myCar.year}
-      //         </IconText>
-      //       </View>
-
-      //     </View>
-      //   </View>
-
-      //   <FlatList></FlatList>
-
-      // </View>
     );
   }
 }

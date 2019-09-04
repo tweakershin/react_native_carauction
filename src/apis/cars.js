@@ -19,6 +19,22 @@ async function fetchCarDetail(vin) {
   return carDetail;
 }
 
+async function auctionListByCar(car) {
+  url = "http://52.78.89.146:3000/api/CarListing";
+  filter = {
+    include: "resolve",
+    where: {
+      car: `resource:com.betweak.carauction.Car#${car.vin}`
+    }
+  };
+  url = `${url}?filter=${JSON.stringify(filter)}`;
+
+  auctionList = await fetch(url).then(resp => {
+    return resp.json();
+  });
+  return auctionList;
+}
+
 async function fetchMyCar(userEmail) {
   url = "http://52.78.89.146:3000/api/Car";
   filter = {
@@ -70,4 +86,4 @@ async function addMyCar(userEmail, vin, brand, model, year, image) {
   return result.json();
 }
 
-export { fetchMyCar, fetchCarDetail };
+export { fetchMyCar, fetchCarDetail, auctionListByCar };
