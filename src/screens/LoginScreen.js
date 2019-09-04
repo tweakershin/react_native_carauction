@@ -73,7 +73,7 @@ export default class LoginScreen extends React.Component {
       console.log(user);
 
       if (user) {
-        AsyncStorage.setItem(`loginMember`, JSON.stringify(user));
+        AsyncStorage.setItem(`loginMember`, JSON.stringify(user[0]));
 
         this.setState({ user: user[0] });
         return this.props.navigation.navigate("MyCarList", {

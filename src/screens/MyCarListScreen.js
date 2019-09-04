@@ -12,6 +12,7 @@ import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import CarList from "../components/CarList";
+import { fetchMyCar } from "../apis/cars";
 
 const mockData = [
   {
@@ -37,34 +38,28 @@ export default class MyCarListScreen extends React.Component {
     super(props);
 
     this.state = {
+      member: {},
       myCarList: []
     };
+
+    this.readyForRender();
   }
 
-  fetchMyCar = async () => {};
+  readyForRender = async () => {
+    await this.setMember();
+    await this.initMyCar();
+  };
 
-  addMycar = async (vin, imageUri) => {};
+  setMember = async () => {
+    member = await AsyncStorage.getItem("loginMember");
+    member = JSON.parse(member);
+    this.setState({ member: member });
+  };
 
-  componentDidMount() {
-    // this.initMyCar();
-    // this.fetchMyCar();
-  }
-
-  initMyCar = async () => {};
-
-  addMyCar(vin, manufacturer, model, year, image) {}
-
-  getCarList = async () => {
-    let a;
-    await AsyncStorage.setItem("@MyStore:myCarList", JSON.stringify(mockData));
-    try {
-      a = await AsyncStorage.getItem("@MyStore:myCarList");
-      if (a !== null) {
-        console.log(a);
-      }
-      console.log(a);
-    } catch {
-      console.log("error");
+  initMyCar = async () => {
+    if (this.state.member) {
+      const carList = await fetchMyCar(this.state.member.email);
+      this.setState({ myCarList: carList });
     }
   };
 
