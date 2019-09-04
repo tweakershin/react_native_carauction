@@ -39,4 +39,4 @@ async function fetchMyCar(userEmail) {
   });
 }
 
-export { fetchMyCar };
+export { fetchMyCar, fetchCarDetail };
