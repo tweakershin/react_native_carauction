@@ -30,9 +30,10 @@ async function fetchUser(email, name = "", isAuctioneer = false) {
       if (!(200 <= resp.status < 300)) {
         console.warn("Network 오류");
       }
-      resp.json();
+      return resp.json();
     })
     .catch(err => console.log(err));
+
   return result;
 }
 

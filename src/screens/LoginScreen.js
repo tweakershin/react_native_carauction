@@ -59,38 +59,41 @@ export default class LoginScreen extends React.Component {
   }
 
   checkLogined = async () => {
-    // let user = AsyncStorage.getItem(`loginuser`);
-    // this.setState({ loginId: user });
-    // if (user) {
-    //   this.props.navigation.navigate("MyCarList", {
-    //     loginId: user
-    //   });
-    // }
-  };
-  submitLogin() {
-    user = fetchUser(this.state.email, this.state.name);
-    console.log(user);
+    let user = AsyncStorage.getItem(`loginMember`);
+    this.setState({ user: user });
     if (user) {
-      this.setState({ user: user[0] });
+      this.props.navigation.navigate("MyCarList", {
+        user: user
+      });
     }
-  }
+  };
+
+  submitLogin = () => {
+    fetchUser(this.state.email, this.state.name).then(user => {
+      console.log(user);
+
+      if (user) {
+        AsyncStorage.setItem(`loginMember`, JSON.stringify(user));
+
+        this.setState({ user: user[0] });
+        return this.props.navigation.navigate("MyCarList", {
+          user: user[0]
+        });
+      }
+    });
+  };
 
   submitSignup = async () => {
-    const userid = this.state.userid;
-    const pwd = this.state.pwd;
+    const user = await postUser(
+      this.state.email,
+      this.state.name,
+      this.state.name
+    );
 
-    let user = await AsyncStorage.getItem(`user:${userid}`);
-    if (user !== null) {
-      alert("이미 가입된 아이디입니다.");
-      return false;
-    }
-
-    await AsyncStorage.setItem(`user:${userid}`, pwd);
-
-    await AsyncStorage.setItem(`loginuser`, userid);
+    AsyncStorage.setItem(`loginMember`, JSON.stringify(user));
 
     this.props.navigation.navigate("MyCarList", {
-      loginId: userid
+      user: user
     });
   };
   // componentDidMount() {
@@ -114,7 +117,10 @@ export default class LoginScreen extends React.Component {
         <TextInput
           placeholder="이메일"
           style={{ fontSize: 25, borderWidth: 1 }}
-          onChangeText={text => this.setState({ email: text })}
+          onChangeText={text => {
+            console.log(text);
+            this.setState({ email: text });
+          }}
         />
 
         <TextInput
