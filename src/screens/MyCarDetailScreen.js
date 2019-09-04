@@ -12,9 +12,16 @@ export default class MyCarDetailScreen extends React.Component {
     super(props);
 
     this.state = {
-      myCar: {}
+      myCar: this.props.navigation.getParam("item")
     };
+    this.fetchCar();
   }
+
+  fetchCar = async () => {
+    car = await fetchCarDetail(this.state.myCar.vin);
+    this.setState({ myCar: car });
+    console.log(car);
+  };
 
   static navigationOptions = ({ navigation }) => {
     const item = navigation.getParam("item");
@@ -52,7 +59,7 @@ export default class MyCarDetailScreen extends React.Component {
           <View style={{ flex: 1 }}>
             <IconText
               iconName="ios-construct"
-              text={this.state.myCar.manufacturer}
+              text={this.state.myCar.brand}
               size={20}
             />
             <IconText
