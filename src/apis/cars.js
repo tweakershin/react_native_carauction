@@ -26,7 +26,11 @@ async function fetchMyCar(userEmail) {
       owner: `resource:com.betweak.carauction.Member#${userEmail}`
     }
   };
+
+  // filter = JSON.stringify(filter, { "#": "%23" });
+  // console.log(filter);
   url = `${url}?filter=${JSON.stringify(filter)}`;
+
   return await fetch(url, {
     method: "GET"
   }).then(resp => {

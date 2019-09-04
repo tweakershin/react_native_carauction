@@ -41,11 +41,6 @@ export default class CarList extends Component {
             this.setState({ refreshing: true });
             console.log("새로고침중입니다.");
             console.log("서버에 요청을 보냅니다.");
-            // setTimeout(
-            //   ()=>{
-            //     console.log("요청 성공")
-            //   },
-            // )
             this.setState({ refreshing: false });
           }}
           ItemSeparatorComponent={({ highlighted, leadingItem }) => {

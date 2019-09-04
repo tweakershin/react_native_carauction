@@ -3,34 +3,26 @@ import React, { Component } from "react";
 import { View } from "react-native";
 import CarList from "../components/CarList";
 
-const mockAuctionData = [
-  {
-    vin: "12345678",
-    manufacturer: "Benz",
-    model: "E-Class",
-    year: 2018,
-    image:
-      "https://www.tesla.com/sites/default/files/images/model-3/model_3--side_profile.png?20170801",
-    price: 12000
-  },
-  {
-    vin: "45678765",
-    manufacturer: "Tesla",
-    model: "Model 3",
-    year: 2017,
-    image:
-      "https://www.tesla.com/tesla_theme/assets/img/compare/model_s--side_profile.png?20170524",
-    price: 8000
-  }
-];
+import { fetchAuctionList } from "../apis/auction";
+import AuctionList from "../components/AuctionList";
 
 export default class AuctionListScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      carList: mockAuctionData
+      carList: []
     };
+
+    this.fetchAuctionList();
   }
+
+  fetchAuctionList = async (auctionState = "FOR_SALE") => {
+    auctionList = await fetchAuctionList(auctionState);
+    this.setState({
+      carList: auctionList
+    });
+  };
+
   static navigationOptions = ({ navigation }) => {
     return {
       title: "Auction"
@@ -40,8 +32,8 @@ export default class AuctionListScreen extends Component {
   render() {
     return (
       <View>
-        <CarList
-          carList={this.state.carList}
+        <AuctionList
+          auctionList={this.state.carList}
           toNavigate="CarAuctionDetail"
           {...this.props}
         />
