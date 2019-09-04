@@ -41,82 +41,18 @@ export default class MyCarListScreen extends React.Component {
     };
   }
 
-  fetchMyCar = async () => {
-    const carList = await fetch(
-      "http://ec2-13-124-49-137.ap-northeast-2.compute.amazonaws.com:3000/api/org.example.carauction.Car"
-    ).then(resp => {
-      if (resp.status != 200) {
-        return false;
-      }
-      return resp.json();
-    });
-    console.log(carList);
-    this.setState({ myCarList: carList });
-  };
+  fetchMyCar = async () => {};
 
-  addMycar = async (vin, imageUri) => {
-    const uri =
-      "http://ec2-13-124-49-137.ap-northeast-2.compute.amazonaws.com:3000/api/org.example.carauction.Car";
-    const result = fetch(uri, {
-      method: "POST",
-      body: JSON.stringify({
-        $class: "org.example.carauction.Car",
-        vin: vin,
-        imageUri: imageUri
-      })
-    });
-    console.log(result);
-  };
+  addMycar = async (vin, imageUri) => {};
 
   componentDidMount() {
     // this.initMyCar();
-    this.fetchMyCar();
+    // this.fetchMyCar();
   }
 
-  initMyCar = async () => {
-    return await fetch(
-      "http://ec2-13-124-49-137.ap-northeast-2.compute.amazonaws.com:3000/api/org.example.carauction.Car",
-      {
-        method: "GET",
-        headers: {
-          Accept: "application/json"
-        }
-      }
-    )
-      .then(resp => resp.json())
-      .then(respJson => {
-        // console.log(respJson);
-        this.setState({ myCarList: respJson });
-      })
-      .catch(err => console.error(err));
-  };
+  initMyCar = async () => {};
 
-  addMyCar(vin, manufacturer, model, year, image) {
-    fetch(
-      "http://ec2-13-124-49-137.ap-northeast-2.compute.amazonaws.com:3000/api/org.example.carauction.Car",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        },
-        body: JSON.stringify({
-          $class: "org.example.carauction.Car",
-          vin: vin,
-          imageUri: image,
-          owner: "ys@betweak.com"
-        })
-      }
-    )
-      .then(resp => resp.json())
-      .then(respJson => {
-        const newCarList = this.state.myCarList.concat(respJson);
-        this.setState({ carList: newCarList });
-      })
-      .catch(err => {
-        console.error(err);
-      });
-  }
+  addMyCar(vin, manufacturer, model, year, image) {}
 
   getCarList = async () => {
     let a;

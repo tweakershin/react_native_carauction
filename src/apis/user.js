@@ -5,6 +5,7 @@ async function fetchUser(email, name = "", isAuctioneer = false) {
   } else {
     url = "http://52.78.89.146:3000/api/Member";
   }
+
   const filter = JSON.stringify({
     where: {
       and: [
@@ -17,21 +18,21 @@ async function fetchUser(email, name = "", isAuctioneer = false) {
       ]
     }
   });
-  // filter = '{"where": {"email": "ys@betweak.com", "lastName": "shin"}}';
-  // url = url + params;
   url = `${url}?filter=${filter}`;
 
   result = await fetch(url, {
-    method: "GET"
-  }).then(resp => {
-    if (!(200 <= resp.status < 300)) {
-      console.error("Request 오류");
-      return resp.status;
-    } else {
-      return resp.json();
+    method: "GET",
+    headers: {
+      "CONTENT-TYPE": "application/json"
     }
-  });
-
+  })
+    .then(resp => {
+      if (!(200 <= resp.status < 300)) {
+        console.warn("Network 오류");
+      }
+      resp.json();
+    })
+    .catch(err => console.log(err));
   return result;
 }
 
