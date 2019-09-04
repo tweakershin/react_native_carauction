@@ -6,7 +6,7 @@ export default class CarItem extends Component {
   static defaultProps = {
     item: {
       vin: "",
-      manufacturer: "",
+      brand: "",
       model: "",
       year: 2000,
       image: "",
@@ -23,7 +23,18 @@ export default class CarItem extends Component {
         onPress={this.props.onPress}
       >
         <View style={{ flex: 3 }}>
-          <Text style={{ fontSize: 30 }}>{this.props.item.vin}</Text>
+          <View
+            style={{
+              position: "absolute",
+              backgroundColor: "yellow",
+              width: 30,
+              zIndex: 1000
+            }}
+          >
+            <Text style={{ fontSize: 15, color: "black", fontWeight: "800" }}>
+              {this.props.item.vin}
+            </Text>
+          </View>
 
           <Image
             source={{ uri: this.props.item.image }}
@@ -32,7 +43,6 @@ export default class CarItem extends Component {
         </View>
 
         <View style={{ flex: 5 }}>
-          <Text>{this.props.item.owner}</Text>
           <Text
             style={{
               fontSize: 24,
@@ -48,7 +58,7 @@ export default class CarItem extends Component {
                 marginTop: 4
               }}
             >
-              {this.props.item.manufacturer}
+              {this.props.item.brand} -
             </Text>
             <Text
               style={{
