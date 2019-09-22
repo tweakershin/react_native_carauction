@@ -9,7 +9,7 @@ import {
   Platform
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-// import VehicleItem from "../components/VehicleItem";
+import VehicleItem from "../components/VehicleItem";
 
 const mockData = [
   {
@@ -33,14 +33,9 @@ const mockData = [
 class MyVehicleListScreen extends Component {
   constructor(props) {
     super(props);
-    // this.state = {
-    //   refreshing: false
-    // };
-  }
-  render(){
-    return(
-      <View></View>
-    )
+    this.state = {
+      refreshing: false
+    };
   }
   static navigationOptions = ({ navigation }) => {
     const params = navigation.state.params || {};
@@ -59,6 +54,53 @@ class MyVehicleListScreen extends Component {
       title: "My Cars"
     };
   };
+
+  refreshData = () => {};
+  renderItem = ({ item }) => {
+    return (
+      <VehicleItem
+        {...item}
+        onPress={() => {
+          this.props.navigation.push("VehicleDetail", {
+            vehicle: item,
+            title: item.model
+          });
+        }}
+      />
+    );
+  };
+
+  render() {
+    return (
+      <View
+        style={{
+          flexDirection: "column",
+          flexGrow: 1,
+          justifyContent: "center",
+          alignItems: "stretch"
+        }}
+      >
+        <FlatList
+          style={{ flexGrow: 1 }}
+          data={mockData}
+          renderItem={this.renderItem}
+          onRefresh={this.refreshData}
+          refreshing={this.state.refreshing}
+          keyExtractor={(item, index) => item.vin}
+          ItemSeparatorComponent={({ highlighted }) => (
+            <View
+              style={{
+                height: StyleSheet.hairlineWidth,
+                marginLeft: 20,
+                width: "100%",
+                backgroundColor: "gray"
+              }}
+            />
+          )}
+        />
+      </View>
+    );
+  }
 }
 
 export default MyVehicleListScreen;
