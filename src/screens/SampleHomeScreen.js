@@ -7,7 +7,9 @@ export default class SampleHomeScreen extends React.Component {
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <Text style={{ fontSize: 30, color: "red" }}>홈스크린!</Text>
 
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate("SampleDetail")}
+        >
           <Text style={{ fontSize: 30, color: "green" }}>디테일가기!</Text>
         </TouchableOpacity>
       </View>
