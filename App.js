@@ -3,26 +3,36 @@ import { StyleSheet, Text, View } from "react-native";
 
 import LoginScreen from "./src/screens/LoginScreen";
 import MyCarListScreen from "./src/screens/MyCarListScreen";
+import MyCarDetailScreen from "./src/screens/MyCarDetailScreen";
+
 import {
   createStackNavigator,
   createBottomTabNavigator,
   createAppContainer
 } from "react-navigation";
 
-const CarListStack = createStackNavigator({
+const defaultNavigationOptions = {
+  headerTintColor: "white",
+  headerStyle: {
+    backgroundColor: "tomato"
+  }
+};
+
+const CarStack = createStackNavigator({
   MyCarList: {
     screen: MyCarListScreen
+  },
+  MyCarDetail: {
+    screen: MyCarDetailScreen
   }
 });
-
-const StackContainer = createAppContainer(CarListStack);
 
 const RootStack = createStackNavigator(
   {
     Login: {
       screen: LoginScreen
     },
-    CarStack: CarListStack
+    CarStack: CarStack
   },
   {
     mode: "modal",
@@ -31,15 +41,7 @@ const RootStack = createStackNavigator(
 );
 
 const AppContainer = createAppContainer(RootStack);
+
 export default function App() {
   return <AppContainer />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
-  }
-});
